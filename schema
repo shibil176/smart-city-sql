@@ -1,0 +1,55 @@
+-- Smart City Resource Management System - Schema
+
+CREATE TABLE Households (
+    household_id INT PRIMARY KEY AUTO_INCREMENT,
+    address VARCHAR(255) NOT NULL,
+    zone VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Residents (
+    resident_id INT PRIMARY KEY AUTO_INCREMENT,
+    household_id INT,
+    name VARCHAR(100),
+    age INT,
+    occupation VARCHAR(100),
+    FOREIGN KEY (household_id) REFERENCES Households(household_id)
+);
+
+CREATE TABLE Energy_Consumption (
+    energy_id INT PRIMARY KEY AUTO_INCREMENT,
+    household_id INT,
+    date DATE,
+    kwh_used DECIMAL(10,2),
+    FOREIGN KEY (household_id) REFERENCES Households(household_id)
+);
+
+CREATE TABLE Water_Usage (
+    water_id INT PRIMARY KEY AUTO_INCREMENT,
+    household_id INT,
+    date DATE,
+    liters_used DECIMAL(10,2),
+    FOREIGN KEY (household_id) REFERENCES Households(household_id)
+);
+
+CREATE TABLE Traffic_Sensors (
+    sensor_id INT PRIMARY KEY AUTO_INCREMENT,
+    zone VARCHAR(50),
+    date DATE,
+    vehicle_count INT
+);
+
+CREATE TABLE Waste_Collection (
+    waste_id INT PRIMARY KEY AUTO_INCREMENT,
+    zone VARCHAR(50),
+    date DATE,
+    waste_collected_kg DECIMAL(10,2)
+);
+
+CREATE TABLE EnergyAlerts (
+    alert_id INT PRIMARY KEY AUTO_INCREMENT,
+    household_id INT,
+    date DATE,
+    usage DECIMAL(10,2),
+    message VARCHAR(255),
+    FOREIGN KEY (household_id) REFERENCES Households(household_id)
+);
